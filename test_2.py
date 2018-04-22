@@ -1,21 +1,11 @@
 import numpy as np
-import random
 
+def findMinValue(list,value):
+    list=sorted(list)
+    for i in range(len(list)):
+        if list[i]>value:
+            return i
 
-def num_update(entertime, open_time, count=-1):
-    """
-    Support the flipping of 2-digit compass directions based on simple_flip().
-    Raise exception for any other strings.
-    :param direction: a string 'SE', 'SW', 'NE', or 'NW'
-    :ret
-    """
-    random.seed(10)
-    while True:
-        entertime += np.random.normal(loc=30, scale=5, size=1)
-        count += 1
-        if entertime > open_time:
-            break
-    return int(entertime), count
 
 arrive_time = input('When will you arrive our restaurant? (Between 5:00 and 10:00, e.g. 5:30)\n')
 table_size = input('Which table size do you need? 2, 4, or 8? \n')
@@ -30,6 +20,7 @@ try:
             startime = []
             finishtime =[]
             tri_distribution = np.sort(np.random.triangular(0, 30, 240, 500).astype(np.int))
+            print(tri_distribution)
             need_count = 0
             n_table = table_dict[str(table_size)]
             table_count = n_table
@@ -46,16 +37,27 @@ try:
                 elif former > n_table:
                     for k in range(n_table):
                         finish=startime[k]+ workingtime[k]
+                        table_count += 1
                         finishtime.append(finish)
                     for h in range(n_table, former):
                         finishtime.sort()
-                        new_finish = finishtime[h-n_table] + workingtime[h]
-                        print(max(finishtime))
-                        if new_finish < max(finishtime):
+                        if max(finishtime) < tri_distribution[h]:
+                            finishtime = []
+                            new_finish = tri_distribution[h]+ workingtime[h]
                             finishtime.append(new_finish)
-            finishtime.sort()
-            waiting_time = finishtime[former - n_table] - open_min
-            all_waiting.append(waiting_time)
+                        elif max(finishtime) > tri_distribution[h]:
+                                position = findMinValue(finishtime, tri_distribution[h])
+                                del finishtime[:position+1]
+                                new_finish = finishtime[position] + workingtime[h]
+                                finishtime.append(new_finish)
+                    finishtime.sort()
+                    if max(finishtime) < open_min:
+                        waiting_time = 0
+                        all_waiting.append(waiting_time)
+                    else:
+                        position = findMinValue(finishtime, open_min)
+                        waiting_time = finishtime[position] - open_min
+                        all_waiting.append(waiting_time)
         average_waiting = sum(all_waiting) / len(all_waiting)
         print(average_waiting)
     else:
