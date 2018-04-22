@@ -25,11 +25,10 @@ try:
     hour_min = arrive_time.split(":")
     if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
         open_min = (int(hour_min[0]) - 5) * 60 + int(hour_min[1])
-        n_sampling = int(open_min / 5)
         all_waiting = []
         for i in range(1):  # simulation times
-            former = []
             startime = []
+            finishtime =[]
             tri_distribution = np.sort(np.random.triangular(0, 30, 240, 500).astype(np.int))
             need_count = 0
             n_table = table_dict[str(table_size)]
@@ -39,24 +38,24 @@ try:
                     table_kind = np.random.choice(table, 1, p=[0.5, 0.4, 0.1])
                     if  int(table_kind[0]) == int(table_size):
                         startime.append(tri_distribution[j])
-
-                        time_count = num_update(tri_distribution[j], open_min)
-#                        print(time_count)
-                        table_count += time_count[1]
-                        need_count += 1
-                        if need_count > table_count:
-                            former.append(time_count[0])
-                        if need_count - table_count < n_table:
-                        else:
-
-            print (need_count, table_count,len(former))
-            if table_count >= need_count:
-                waiting_time = 0
-                all_waiting.append(waiting_time)
-            else:
-                former.sort()
-                waiting_time = former[need_count - table_count - 1] - open_min
-                all_waiting.append(waiting_time)
+                former = len(startime)
+                workingtime = np.random.normal(loc=30, scale=5, size=former).astype(np.int)
+                if former <= n_table:
+                    waiting_time = 0
+                    all_waiting.append(waiting_time)
+                elif former > n_table:
+                    for k in range(n_table):
+                        finish=startime[k]+ workingtime[k]
+                        finishtime.append(finish)
+                    for h in range(n_table, former):
+                        finishtime.sort()
+                        new_finish = finishtime[h-n_table] + workingtime[h]
+                        print(max(finishtime))
+                        if new_finish < max(finishtime):
+                            finishtime.append(new_finish)
+            finishtime.sort()
+            waiting_time = finishtime[former - n_table] - open_min
+            all_waiting.append(waiting_time)
         average_waiting = sum(all_waiting) / len(all_waiting)
         print(average_waiting)
     else:
