@@ -28,9 +28,7 @@ obtain the waiting time.
 The average number of customer groups for one night is 350.
 The opening hour is 5pm to 8pm.
 The restaurant has:
-20 tables of size 2 for 1~2 customers
-15 tables of size 4 for 3~4 customers
- 3 tables of size 8 for 5~8 customers
+20 tables of size 2 for 1 to 2 customers; 15 tables of size 4 for 3 to 4 customers; 3 tables of size 8 for 5 to 8 customers.
 
 The possibilities of customer groups going to restaurant: 1 to 2 customers group: 50%; 3 to 4 customers group: 40%; 5 to 8 customers group: 10%.
 
