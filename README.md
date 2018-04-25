@@ -1,27 +1,58 @@
-Create a FORK of this repository to store your code, data, and documentation for the final project. Detailed instructions for this assignment are in the course Moodle site.  The reason I'm asking you to fork this empty repository instead of creating a stand-alone repository is that it will be much easier for me and all students in the course to find all of our projects for code review and for grading. You can even get code review from students in the other section of IS590PR this way.
-
-Even though your fork of this repository shall be public, you'll still need to explicitly add any students on your team as Collaborators in the Settings. That way you can grant them write privileges.
-
-DELETE these lines from TEMPLATE up.
-
-TEMPLATE for your report:
-
-# Title: 
+# Title: Simulation of Waiting Time in Restaurant
 
 ## Team Member(s):
-(Note: Don't put your email addresses here (which is public).  If a student wants their NAME hidden as well, due to optional FERPA regulations, they can be listed purely by their GitHub ID).
+Xiaoye Li (Thursday), Pan Zhang, Yujia Wang, Yun Sun
 
-# Monte Carlo Simulation Scenario & Purpose:
-(be sure to read the instructions given in course Moodle)
 
-## Simulation's variables of uncertainty
-List and describe your simulation's variables of uncertainty (where you're using pseudo-random number generation). For each such variable, how did you decide the range and probability distribution to use?  Do you think it's a good representation of reality?
+## Monte Carlo Simulation Scenario & Purpose:
 
-## Hypothesis or hypotheses before running the simulation:
+The purpose of this simulation is to examine the average waiting time for the seats in Lao Si Chuan.
+Besides, help customer to schedule their time properly, so that enhance the customers’ service.
 
-## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
+Solution:
+When the restaurant is full, calculate the possible departure time of the guests in the restaurant
+and sort them according to the random meal time of the previous guests.
+Then based on the comparison of the current guest's arrival time and the previous time list,
+obtain the waiting time.
+
+### Simulation's variables of uncertainty:
+
+1. Customer eating time
+    - Normal distribution (30, 5^2)
+2. The visiting frequency of customer groups for one night
+    - Triangle distribution
+
+
+### Hypothesis before running the simulation:
+
+The average number of customer groups for one night is 350.
+The opening hour is 5pm to 8pm.
+The restaurant has:
+20 tables of size 2 for 1~2 customers
+15 tables of size 4 for 3~4 customers
+ 3 tables of size 8 for 5~8 customers
+
+The possibilities of customer groups going to restaurant:
+1~2 customers group: 50%
+3~4 customers group: 40%
+5~8 customers group: 10%
+
+We assume the simulation running 100 times which can be revised in the code
+
+
+## Analytical Summary of your findings:
+1. It takes the longest waiting time around 7pm.
+2. Since we assume the average number of customer groups for one night is 350, which is a large number,
+it will results in the longer waiting time. Thus we may change this number in the processing.
 
 ## Instructions on how to use the program:
 
-## All Sources Used:
+User input:
+1. input the arriving time, for example 5:30, 7:00
+2. input the table size you need
+
+The system will output the average waiting time
+
+## Sources Used:
+https://github.com/iSchool-590PR-2018Spring/in-class-examples/blob/master/week_12_Prob_Distributions.ipynb
 
