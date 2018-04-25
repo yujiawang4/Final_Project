@@ -33,9 +33,9 @@ The restaurant has:
  3 tables of size 8 for 5~8 customers
 
 The possibilities of customer groups going to restaurant:
-1~2 customers group: 50%
-3~4 customers group: 40%
-5~8 customers group: 10%
+1-2 customers group: 50%
+3-4 customers group: 40%
+5-8 customers group: 10%
 
 We assume the simulation running 100 times which can be revised in the code
 
