@@ -70,7 +70,10 @@ class Sim:
                         all_waiting.append(waiting_time)
             print(all_waiting)
             average_waiting = int(sum(all_waiting) / len(all_waiting))
-            print(average_waiting)
+            print("The max waiting time is ",max(all_waiting))
+            print("The average waiting time is ",average_waiting)
+            print("The minimum waiting time is ",min(all_waiting))
+
 
 
 while True:
