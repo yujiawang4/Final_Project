@@ -8,19 +8,19 @@ class Sim:
         self.table_size=table_size
 
 
-    def findMinValue(slef, list, value):
+    def findMinValue(self, list, value):
         list = sorted(list)
         for i in range(len(list)):
             if list[i] >= value:
                 return i
 
-    def simulation(self):
+    def simulation(self,time):
         work_dict = {"2": 30, "4": 40, "8": 60}
         hour_min = self.arrivetime.split(":")
         if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
             open_min = (int(hour_min[0]) - 5) * 60 + int(hour_min[1])
             all_waiting = []
-            for i in range(1000):  # simulation times
+            for i in range(time):  # simulation times
                 startime = []
                 finishtime =[]
                 tri_distribution = np.sort(np.random.triangular(0, 40, 240, 300).astype(np.int))
@@ -88,8 +88,8 @@ while True:
         print("please enter valid table size")
     else:
         break
-
+numberOfSim=eval(input("How many times of simulations do you want? \n"))
 table = [2, 4, 8]
 table_dict = {"2": 25, "4": 24, "8": 5}
 simRestaurant=Sim(table,table_dict,arrive_time,table_size)
-simRestaurant.simulation()
+simRestaurant.simulation(numberOfSim)
