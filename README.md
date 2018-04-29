@@ -6,7 +6,7 @@ Xiaoye Li (Thursday), Pan Zhang, Yujia Wang, Yun Sun
 
 ## Monte Carlo Simulation Scenario & Purpose:
 
-The purpose of this simulation is to examine the average waiting time for the seats in Lao Si Chuan.
+The purpose of this simulation is to examine the expected waiting time of the seats for different groups of people.
 Besides, help customer to schedule their time properly, so that enhance the customers’ service.
 
 Solution:
@@ -18,34 +18,40 @@ obtain the waiting time.
 ### Simulation's variables of uncertainty:
 
 1. Customer eating time
-    - Normal distribution (30, 5^2)
+    - Normal distribution (30, 5^2) for 2 customers
+    - Normal distribution (40, 5^2) for 4 customers
+    - Normal distribution (60, 5^2) for 8 customers
 2. The visiting frequency of customer groups for one night
-    - Triangle distribution
+    - Triangular distribution
 
 
 ### Hypothesis before running the simulation:
 
-The average number of customer groups for one night is 350.
-The opening hour is 5pm to 8pm.
-The restaurant has:
-20 tables of size 2 for 1 to 2 customers; 15 tables of size 4 for 3 to 4 customers; 3 tables of size 8 for 5 to 8 customers.
-
-The possibilities of customer groups going to restaurant: 1 to 2 customers group: 50%; 3 to 4 customers group: 40%; 5 to 8 customers group: 10%.
-
-We assume the simulation running 100 times which can be revised in the code
+1. The average number of customer groups for one night is 300.
+2. The opening hour is 5pm to 9pm.
+3. The restaurant has:
+  - 25 tables of size 2 for 1 to 2 customers; 
+  - 27 tables of size 4 for 3 to 4 customers; 
+  - 5 tables of size 8 for 5 to 8 customers.
+4. The possibilities of customer groups going to restaurant: 
+  - 1 to 2 customers group: 50%; 
+  - 3 to 4 customers group: 45%; 
+  - 5 to 8 customers group: 5%.
+5. We assume a group of customers as one unit.
+6. We assume the simulation running 1000 times which can be revised in the code.
 
 
 ## Analytical Summary of your findings:
 1. It takes the longest waiting time around 7pm.
-2. Since we assume the average number of customer groups for one night is 350, which is a large number,
-it will results in the longer waiting time. Thus we may change this number in the processing.
+2. Since we assume the average number of customer groups for one night is 300, which is a large number,
+it will results in the longer waiting time. 
 
 ## Instructions on how to use the program:
 
 User input:
 1. input the arriving time, for example 5:30, 7:00
 2. input the table size you need
-
+Output:
 The system will output the average waiting time
 
 ## Sources Used:
