@@ -1,70 +1,69 @@
 import numpy as np
-import random
 
-class Restaurant:
-    def __int__(self, table_size, time):
-        self.table_size = table_size
-        self.time = time
-        self.star_time = 5
-        self.end_time = 10
-
-    @staticmethod
-    def num_update(entertime, open_time, count = -1):
-        """
-        Support the flipping of 2-digit compass directions based on simple_flip().
-        Raise exception for any other strings.
-        :param direction: a string 'SE', 'SW', 'NE', or 'NW'
-        :ret
-        """
-        random.seed(10)
-        while True:
-            entertime += np.random.normal(loc=30, scale=5, size=1)
-            count += 1
-            if entertime > open_time:
-                break
-        return int(entertime),count
-
-if __name__ == '__main__':
-    while True:
-        arrive_time = input('When will you arrive our restaurant? (Between 5:00 and 10:00, e.g. 5:30)\n')
-        table_size = input('Which table size do you need? 2, 4, or 8? \n')
-        table = [2, 4, 8]
-        table_dict={"2":50, "4":40, "8":5}
-        try:
-            hour_min= arrive_time.split(":")
-            if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
-                open_min = (hour_min[0]-5)* 60 + hour_min[1]
-                n_sampling = int(open_min/5)
-                all_waiting=[]
-                for i in range(100):   # simulation times
-                    former=[]
-                    tri_distribution = np.random.triangular(0, 30, 240, 480).astype(np.int)
-                    need_count = 0
-                    for j in range(480):
-                        table_count=table_dict[str(table_size)]
-                        if tri_distribution[j] < open_min:
-                            table_kind = np.random.choice(table,1, p=[0.5,0.4,0.1])
-                            if int(table_kind[0]) == int(table_size):
-                                time_count = Restaurant.num_update(tri_distribution[j],open_min)
-                                former.append(time_count[0])
-                                table_count += time_count[1]
-                                need_count =+ 1
-                    if table_count >= need_count:
-                        waiting_time=0
-                        all_waiting.append(waiting_time)
-                    else:
-                        former.sort()
-                        waiting_time = former[need_count-table_count-1] - open_min
-                        all_waiting.append(waiting_time)
-                average_waiting= sum(all_waiting)/len(all_waiting)
-                print(average_waiting)
-            else:
-                raise ValueError('The restaurant is not open at {} .'.format(arrive_time))
-        except KeyError:
-                print('Invalid arrive time {} given or tale size {}! Please check your time.'.format(arrive_time,table_size))
+def findMinValue(list,value):
+    list=sorted(list)
+    for i in range(len(list)):
+        if list[i] >= value:
+            return i
 
 
-
-
-
-
+arrive_time = input('When will you arrive our restaurant? (Between 5:00 and 10:00, e.g. 5:30)\n')
+table_size = input('Which table size do you need? 2, 4, or 8? \n')
+table = [2, 4, 8]
+table_dict = {"2": 15, "4": 12, "8": 3}
+try:
+    hour_min = arrive_time.split(":")
+    if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
+        open_min = (int(hour_min[0]) - 5) * 60 + int(hour_min[1])
+        all_waiting = []
+        for i in range(1000):  # simulation times
+            startime = []
+            finishtime =[]
+            tri_distribution = np.sort(np.random.triangular(0, 30, 240, 350).astype(np.int))
+#            print(tri_distribution)
+            need_count = 0
+            n_table = table_dict[str(table_size)]
+            for j in range(350):
+                if tri_distribution[j] < open_min:
+                    table_kind = np.random.choice(table, 1, p=[0.5, 0.4, 0.1])
+                    if int(table_kind[0]) == int(table_size):
+                        startime.append(tri_distribution[j])
+            former = len(startime)
+            workingtime = np.random.normal(loc=30, scale=5, size=former).astype(np.int)
+            if former < n_table:
+                waiting_time = 0
+                all_waiting.append(waiting_time)
+            elif former >= n_table:
+                for k in range(n_table):
+                    finish=startime[k]+ workingtime[k]
+                    finishtime.append(finish)
+                for h in range(n_table, former):
+                    finishtime.sort()
+                    if max(finishtime) <= tri_distribution[h]:
+                        finishtime = []
+                        new_finish = tri_distribution[h] + workingtime[h]
+                        finishtime.append(new_finish)
+                    elif (max(finishtime) > tri_distribution[h] and min(finishtime) <= tri_distribution[h]):
+                        position = findMinValue(finishtime, tri_distribution[h])
+                        new_finish = finishtime[position] + workingtime[h]
+                        del finishtime[:position+1]
+                        finishtime.append(new_finish)
+                    elif min(finishtime) > tri_distribution[h]:
+                        new_finish= tri_distribution[h] + workingtime[h]
+                        del finishtime[0]
+                        finishtime.append(new_finish)
+                finishtime.sort()
+                if len(finishtime) < n_table or min(finishtime) <= open_min :
+                    waiting_time = 0
+                    all_waiting.append(waiting_time)
+                elif min(finishtime) > open_min:
+                    position = findMinValue(finishtime, open_min)
+                    waiting_time = finishtime[position] - open_min
+                    all_waiting.append(waiting_time)
+        print(all_waiting)
+        average_waiting = int(sum(all_waiting) / len(all_waiting))
+        print(average_waiting)
+    else:
+        raise ValueError('The restaurant is not open at {} .'.format(arrive_time))
+except KeyError:
+    print('Invalid arrive time {} given or table size {}! Please check your input.'.format(arrive_time, table_size))
