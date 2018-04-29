@@ -10,12 +10,13 @@ arrive_time = input('When will you arrive our restaurant? (Between 5:00 and 10:0
 table_size = input('Which table size do you need? 2, 4, or 8? \n')
 table = [2, 4, 8]
 table_dict = {"2": 25, "4": 20, "8": 5}
+work_dict = {"2": 30, "4": 40, "8": 60}
 try:
     hour_min = arrive_time.split(":")
     if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
         open_min = (int(hour_min[0]) - 5) * 60 + int(hour_min[1])
         all_waiting = []
-        for i in range(1):  # simulation times
+        for i in range(1000):  # simulation times
             startime = []
             finishtime =[]
             tri_distribution = np.sort(np.random.triangular(0, 40, 240, 300).astype(np.int))
@@ -29,7 +30,7 @@ try:
                         startime.append(tri_distribution[j])
             former = len(startime)
             print(former)
-            workingtime = np.random.normal(loc=30, scale=5, size=former).astype(np.int)
+            workingtime = np.random.normal(loc=work_dict[str(table_size)], scale=5, size=former).astype(np.int)
             if former < n_table:
                 waiting_time = 0
                 all_waiting.append(waiting_time)
