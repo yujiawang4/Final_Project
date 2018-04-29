@@ -16,10 +16,10 @@ try:
     if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
         open_min = (int(hour_min[0]) - 5) * 60 + int(hour_min[1])
         all_waiting = []
-        for i in range(1000):  # simulation times
+        for i in range(1):  # simulation times
             startime = []
             finishtime =[]
-            tri_distribution = np.sort(np.random.triangular(0, 30, 240, 350).astype(np.int))
+            tri_distribution = np.sort(np.random.triangular(0, 40, 240, 600).astype(np.int))
 #            print(tri_distribution)
             need_count = 0
             n_table = table_dict[str(table_size)]
@@ -29,6 +29,7 @@ try:
                     if int(table_kind[0]) == int(table_size):
                         startime.append(tri_distribution[j])
             former = len(startime)
+            print(former)
             workingtime = np.random.normal(loc=30, scale=5, size=former).astype(np.int)
             if former < n_table:
                 waiting_time = 0
@@ -39,18 +40,26 @@ try:
                     finishtime.append(finish)
                 for h in range(n_table, former):
                     finishtime.sort()
-                    if max(finishtime) <= tri_distribution[h]:
+                    if (max(finishtime) <= tri_distribution[h]):
                         finishtime = []
                         new_finish = tri_distribution[h] + workingtime[h]
                         finishtime.append(new_finish)
-                    elif (max(finishtime) > tri_distribution[h] and min(finishtime) <= tri_distribution[h]):
+                    elif (len(finishtime) == n_table and max(finishtime) > tri_distribution[h] and min(finishtime) <= tri_distribution[h]):
                         position = findMinValue(finishtime, tri_distribution[h])
                         new_finish = finishtime[position] + workingtime[h]
                         del finishtime[:position+1]
                         finishtime.append(new_finish)
-                    elif min(finishtime) > tri_distribution[h]:
+                    elif (len(finishtime) == n_table and min(finishtime) > tri_distribution[h]):
                         new_finish= tri_distribution[h] + workingtime[h]
                         del finishtime[0]
+                        finishtime.append(new_finish)
+                    elif (len(finishtime) < n_table and max(finishtime) > tri_distribution[h] and min(finishtime) <= tri_distribution[h]):
+                        position = findMinValue(finishtime, tri_distribution[h])
+                        del finishtime[:position + 1]
+                        new_finish = tri_distribution[h] + workingtime[h]
+                        finishtime.append(new_finish)
+                    elif (len(finishtime) < n_table and min(finishtime) > tri_distribution[h]):
+                        new_finish = tri_distribution[h] + workingtime[h]
                         finishtime.append(new_finish)
                 finishtime.sort()
                 if len(finishtime) < n_table or min(finishtime) <= open_min :
