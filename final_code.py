@@ -1,11 +1,12 @@
 import numpy as np
 
 class Sim:
-    def __init__(self,table,table_dict,arrivetime,table_size):
+    def __init__(self,table,table_dict,arrivetime,table_size,day):
         self.table=table
         self.table_dict=table_dict
         self.arrivetime=arrivetime
         self.table_size=table_size
+        self.day=day
 
 
     def findMinValue(self, list, value):
@@ -13,6 +14,19 @@ class Sim:
         for i in range(len(list)):
             if list[i] >= value:
                 return i
+    def computDistribution(self,day):
+        if day==1:
+            return np.sort(np.random.triangular(0, 40, 240, 250).astype(np.int))
+        elif day==2:
+            return np.sort(np.random.triangular(0, 30, 240, 350).astype(np.int))
+        elif day==3:
+            return np.sort(np.random.triangular(0, 35, 240, 350).astype(np.int))
+        elif day==4:
+            return np.sort(np.random.triangular(0, 30, 240, 368).astype(np.int))
+        elif day==5:
+            return np.sort(np.random.triangular(0, 40, 240, 500).astype(np.int))
+        elif day==6:
+            return np.sort(np.random.triangular(0, 30, 240, 450).astype(np.int))
 
     def simulation(self,time):
         work_dict = {"2": 30, "4": 40, "8": 60}
@@ -23,11 +37,11 @@ class Sim:
             for i in range(time):  # simulation times
                 startime = []
                 finishtime =[]
-                tri_distribution = np.sort(np.random.triangular(0, 40, 240, 300).astype(np.int))
+                tri_distribution = self.computDistribution(self.day)
 #            print(tri_distribution)
                 need_count = 0
                 n_table = self.table_dict[str(self.table_size)]
-                for j in range(300):
+                for j in range(len(tri_distribution)):
                     if tri_distribution[j] < open_min:
                         table_kind = np.random.choice(table, 1, p=[0.5, 0.45, 0.05])
                         if int(table_kind[0]) == int(self.table_size):
@@ -92,7 +106,8 @@ while True:
     else:
         break
 numberOfSim=eval(input("How many times of simulations do you want? \n"))
+day=eval(input("Which day do you want to simulate:? \n 1.Monday\n 2.Tuesday\n 3.Wednesday\n 4.Thursday\n 5.Friday\n 6.Saturday"))
 table = [2, 4, 8]
-table_dict = {"2": 25, "4": 24, "8": 5}
-simRestaurant=Sim(table,table_dict,arrive_time,table_size)
+table_dict = {"2": 25, "4": 27, "8": 5}
+simRestaurant=Sim(table,table_dict,arrive_time,table_size,day)
 simRestaurant.simulation(numberOfSim)
