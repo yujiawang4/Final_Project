@@ -48,11 +48,11 @@ it will results in the longer waiting time.
 
 ## Instructions on how to use the program:
 
-User input:
-1. input the arriving time, for example 5:30, 7:00
-2. input the table size you need
-Output:
-The system will output the average waiting time
+1.User input:
+ - input the arriving time, for example 5:30, 7:00
+ - input the table size you need
+2.Output:
+ - The system will output the average waiting time
 
 ## Sources Used:
 https://github.com/iSchool-590PR-2018Spring/in-class-examples/blob/master/week_12_Prob_Distributions.ipynb
