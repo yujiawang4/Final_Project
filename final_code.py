@@ -6,14 +6,14 @@ def findMinValue(list,value):
         if list[i] >= value:
             return i
 
-arrive_time = input('When will you arrive our restaurant? (Between 5:00 and 10:00, e.g. 5:30)\n')
+arrive_time = input('When will you arrive our restaurant? (Between 5:00 and 9:00, e.g. 5:30)\n')
 table_size = input('Which table size do you need? 2, 4, or 8? \n')
 table = [2, 4, 8]
-table_dict = {"2": 25, "4": 20, "8": 5}
+table_dict = {"2": 25, "4": 24, "8": 5}
 work_dict = {"2": 30, "4": 40, "8": 60}
 try:
     hour_min = arrive_time.split(":")
-    if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
+    if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 9):
         open_min = (int(hour_min[0]) - 5) * 60 + int(hour_min[1])
         all_waiting = []
         for i in range(1000):  # simulation times
@@ -25,11 +25,11 @@ try:
             n_table = table_dict[str(table_size)]
             for j in range(300):
                 if tri_distribution[j] < open_min:
-                    table_kind = np.random.choice(table, 1, p=[0.5, 0.4, 0.1])
+                    table_kind = np.random.choice(table, 1, p=[0.5, 0.45, 0.05])
                     if int(table_kind[0]) == int(table_size):
                         startime.append(tri_distribution[j])
             former = len(startime)
-            print(former)
+#            print(former)
             workingtime = np.random.normal(loc=work_dict[str(table_size)], scale=5, size=former).astype(np.int)
             if former < n_table:
                 waiting_time = 0
