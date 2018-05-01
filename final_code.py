@@ -2,6 +2,18 @@ import numpy as np
 
 class Sim:
     def __init__(self,table,table_dict,arrivetime,table_size,day):
+        """
+        The constructor function of the Sim class, initialize the instance of the
+        Sim class.
+
+        :param table: a list that contain the table kind
+        :param table_dict: a dictionary that with the table kind as key
+        the number of that kind as value
+        :param arrivetime: the arrival time of the customer
+        :param table_size: the number of party of customer
+        :param day: which day customer want to simulate
+        """
+
         self.table=table
         self.table_dict=table_dict
         self.arrivetime=arrivetime
@@ -10,12 +22,30 @@ class Sim:
 
 
     def findMinValue(self, list, value):
+        """
+        This function will find the MINIMUM value that
+        is greater than a given value
+
+        :param list: a list that we want to search
+        :param value: the value we use to compare
+        :return: then, will return the position in the list of that minimum value
+        """
+
         list = sorted(list)
         for i in range(len(list)):
             if list[i] >= value:
                 return i
+
     def computDistribution(self,day):
+        """
+        Compute the distribution of a given day
+        :param day: input is the day, ex. Monday, Tuesday
+        :return: return an array of distribution of arrival time  of other customer
+        """
+
+
         if day==1:
+            #This methond generate the triangular distribution
             return np.sort(np.random.triangular(0, 40, 240, 250).astype(np.int))
         elif day==2:
             return np.sort(np.random.triangular(0, 30, 240, 350).astype(np.int))
@@ -29,6 +59,11 @@ class Sim:
             return np.sort(np.random.triangular(0, 30, 240, 450).astype(np.int))
 
     def simulation(self,time):
+        """
+        Simulate the waiting time
+        :param time: this is the number of simulation user want to have
+        :return:
+        """
         work_dict = {"2": 30, "4": 40, "8": 60}
         hour_min = self.arrivetime.split(":")
         if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
@@ -91,22 +126,35 @@ class Sim:
 
 
 while True:
+
     arrive_time = input('When will you arrive our restaurant? (Between 5:00 and 9:00, e.g. 5:30)\n')
     try:
         hour_min = arrive_time.split(":")
         if not (int(hour_min[0]) >= 5 and int(hour_min[0]) < 9):
             print("please enter valid time")
-        else: break
+        else:
+            break
+
     except:
         print("Please enter valid time")
+
 while True:
+
     table_size = eval(input('Which table size do you need? 2, 4, or 8? \n'))
     if table_size not in [2,4,8]:
         print("please enter valid table size")
     else:
         break
+
 numberOfSim=eval(input("How many times of simulations do you want? \n"))
-day=eval(input("Which day do you want to simulate:? \n 1.Monday\n 2.Tuesday\n 3.Wednesday\n 4.Thursday\n 5.Friday\n 6.Saturday"))
+
+while True:
+
+    day=int(input("Which day do you want to simulate:? \n 1.Monday\n 2.Tuesday\n 3.Wednesday\n 4.Thursday\n 5.Friday\n 6.Saturday"))
+    if not(int(day)>=1 and int(day)<7 ):
+        print("Please enter valid number to choose your day")
+    else:
+        break
 table = [2, 4, 8]
 table_dict = {"2": 25, "4": 27, "8": 5}
 simRestaurant=Sim(table,table_dict,arrive_time,table_size,day)
