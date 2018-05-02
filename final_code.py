@@ -5,7 +5,6 @@ class Sim:
         """
         The constructor function of the Sim class, initialize the instance of the
         Sim class.
-
         :param table: a list that contain the table kind
         :param table_dict: a dictionary that with the table kind as key
         the number of that kind as value
@@ -25,7 +24,6 @@ class Sim:
         """
         This function will find the MINIMUM value that
         is greater than a given value
-
         :param list: a list that we want to search
         :param value: the value we use to compare
         :return: then, will return the position in the list of that minimum value
@@ -62,19 +60,20 @@ class Sim:
         """
         Simulate the waiting time
         :param time: this is the number of simulation user want to have
-        :return:
+        :return: print min, max, and average waiting time for specific arriving time
         """
         work_dict = {"2": 30, "4": 40, "8": 60}
         hour_min = self.arrivetime.split(":")
         if (int(hour_min[0]) >= 5 and int(hour_min[0]) < 10):
             open_min = (int(hour_min[0]) - 5) * 60 + int(hour_min[1])
+            #calculate the amount of time restaurant have been open when customer arrives
             all_waiting = []
+            #list for waiting time of each simulation
             for i in range(time):  # simulation times
                 startime = []
                 finishtime =[]
                 tri_distribution = self.computDistribution(self.day)
-#            print(tri_distribution)
-                need_count = 0
+                #obtain distribution of the customer groups' arriving time
                 n_table = self.table_dict[str(self.table_size)]
                 for j in range(len(tri_distribution)):
                     if tri_distribution[j] < open_min:
@@ -82,7 +81,7 @@ class Sim:
                         if int(table_kind[0]) == int(self.table_size):
                             startime.append(tri_distribution[j])
                 former = len(startime)
-                #print(former)
+                #obtain all the former customer groups that need the same size of table
                 workingtime = np.random.normal(loc=work_dict[str(table_size)], scale=5, size=former).astype(np.int)
                 if former < n_table:
                     waiting_time = 0
@@ -110,6 +109,7 @@ class Sim:
                             new_finish = startime[h] + workingtime[h]
                             finishtime.append(new_finish)
                     finishtime.sort()
+                    #simulate the process of all the former customer groups
                     if len(finishtime) < n_table or min(finishtime) <= open_min :
                         waiting_time = 0
                         all_waiting.append(waiting_time)
