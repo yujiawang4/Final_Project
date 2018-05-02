@@ -43,8 +43,9 @@ obtain the waiting time.
 
 ## Analytical Summary of your findings:
 1. It takes the longest waiting time around 7pm.
-2. Since we assume the average number of customer groups for one night is 300, which is a large number,
-it will results in the longer waiting time. 
+2. Different day of week has different total number of customer groups during the whole opening time.
+   And the mode of customer groups' arriving time is different as well.
+
 
 ## Instructions on how to use the program:
 
