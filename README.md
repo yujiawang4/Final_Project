@@ -53,6 +53,8 @@ it will results in the longer waiting time.
  - input the table size you need
  - input specific times you want to simulate
  - input specific day of week
+
+
 2. Output:
  - The system will output the min, max and average waiting time
 
