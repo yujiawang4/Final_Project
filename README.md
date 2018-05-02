@@ -27,8 +27,16 @@ obtain the waiting time.
 
 ### Hypothesis before running the simulation:
 
-1. The average number of customer groups for one night is 300.
-2. The opening hour is 5pm to 9pm.
+1. Different day of week has different total number of customer groups during the whole opening time.
+   And the mode of customer groups' arriving time is different as well.
+   - Monday, triangular(0, 40, 240, 250)
+   - Tuesday, triangular(0, 30, 240, 350)
+   - Wednesday, triangular(0, 35, 240, 350)
+   - Thursday, triangular(0, 30, 240, 368)
+   - Friday, triangular(0, 40, 240, 500)
+   - Saturday, triangular(0, 30, 240, 450)
+
+2. The opening hour is 5pm to 9pm and it isn't open on Sunday.
 3. The restaurant has:
   - 25 tables of size 2 for 1 to 2 customers; 
   - 27 tables of size 4 for 3 to 4 customers; 
@@ -42,9 +50,8 @@ obtain the waiting time.
 
 
 ## Analytical Summary of your findings:
-1. It takes the longest waiting time around 7pm.
-2. Different day of week has different total number of customer groups during the whole opening time.
-   And the mode of customer groups' arriving time is different as well.
+1. It takes the longest waiting time around one hour after the mode arriving time.
+2. Day of week and arriving time affact the waiting time a lot.
 
 
 ## Instructions on how to use the program:
