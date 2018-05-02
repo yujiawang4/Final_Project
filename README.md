@@ -51,8 +51,10 @@ it will results in the longer waiting time.
 1.User input:
  - input the arriving time, for example 5:30, 7:00
  - input the table size you need
+ - input specific times you want to simulate
+ - input specific day of week
 2.Output:
- - The system will output the average waiting time
+ - The system will output the min, max and average waiting time
 
 ## Sources Used:
 https://github.com/iSchool-590PR-2018Spring/in-class-examples/blob/master/week_12_Prob_Distributions.ipynb
